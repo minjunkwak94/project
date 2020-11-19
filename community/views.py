@@ -12,9 +12,9 @@ def post_list_create(request):
         serializer = PostListSerializer(posts, many=True)
         return Response(serializer.data)
     else:
-        serializer = PostDetailSerializer(data=request.data)
+        serializer = PostListSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
 
 
@@ -44,7 +44,7 @@ def comment_list_create(request, post_pk):
     else:
         serializer = CommentListSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            comment = serializer.save(post=post)
+            comment = serializer.save(post=post, user=request.user)
             return Response(serializer.data)
 
 
