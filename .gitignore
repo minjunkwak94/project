@@ -1,11 +1,6 @@
 
-<<<<<<< HEAD
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,visualstudiocode,node,vue,vuejs,venv,django,python
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,visualstudiocode,node,vue,vuejs,venv,django,python
-=======
-# Created by https://www.toptal.com/developers/gitignore/api/python,django,node,vue,vuejs,visualstudiocode,venv,windows,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,django,node,vue,vuejs,visualstudiocode,venv,windows,macos
->>>>>>> minjun
+# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,python,django,venv,visualstudiocode,node,vue,vuejs
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,python,django,venv,visualstudiocode,node,vue,vuejs
 
 ### Django ###
 *.log
@@ -419,4 +414,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,windows,visualstudiocode,node,vue,vuejs,venv,django,python
+# End of https://www.toptal.com/developers/gitignore/api/windows,macos,python,django,venv,visualstudiocode,node,vue,vuejs
