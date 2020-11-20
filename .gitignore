@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,visualstudiocode,node,vue,vuejs,venv,django,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,visualstudiocode,node,vue,vuejs,venv,django,python
+=======
+# Created by https://www.toptal.com/developers/gitignore/api/python,django,node,vue,vuejs,visualstudiocode,venv,windows,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,django,node,vue,vuejs,visualstudiocode,venv,windows,macos
+>>>>>>> minjun
 
 ### Django ###
 *.log
