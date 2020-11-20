@@ -1,12 +1,9 @@
 from django.urls import path
 from . import views
 
-app_name = 'movies'
-
-
 urlpatterns = [
-    path('', views.post_list_create),
-    path('<int:post_pk>/', views.post_detail_update_delete),
-    path('<int:post_pk>/comment/', views.comment_list_create),
-    path('<int:post_pk>/comment/<int:comment_pk>/', views.comment_delete),
+    path('', views.movie_list),
+    path('<int:movie_pk>/', views.movie_detail_create_rank),
+    path('<int:movie_pk>/ranks/', views.rank_list),
+    path('<int:rank_pk>/', views.rank_detail_update_delete),    
 ]
