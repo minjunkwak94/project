@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,python,django,venv,visualstudiocode,node,vue,vuejs
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,python,django,venv,visualstudiocode,node,vue,vuejs
+=======
+# Created by https://www.toptal.com/developers/gitignore/api/python,windows,django,macos,visualstudiocode,venv
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,windows,django,macos,visualstudiocode,venv
+>>>>>>> minjun
 
 ### Django ###
 *.log
@@ -179,6 +184,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+<<<<<<< HEAD
 ### Node ###
 # Logs
 logs
@@ -287,6 +293,8 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+=======
+>>>>>>> minjun
 ### Python ###
 # Byte-compiled / optimized / DLL files
 
@@ -371,6 +379,7 @@ pip-selfcheck.json
 .history
 .ionide
 
+<<<<<<< HEAD
 ### Vue ###
 # gitignore template for Vue.js projects
 #
@@ -388,6 +397,8 @@ test/
 npm-debug.log
 yarn-error.log
 
+=======
+>>>>>>> minjun
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -414,4 +425,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,python,django,venv,visualstudiocode,node,vue,vuejs
+=======
+# End of https://www.toptal.com/developers/gitignore/api/python,windows,django,macos,visualstudiocode,venv
+>>>>>>> minjun
