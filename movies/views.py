@@ -14,7 +14,7 @@ from .forms import RankForm
 @require_GET
 def movie_list(request):
     movies = Movie.objects.all()
-    paginator = Paginator(movies, 6)
+    paginator = Paginator(movies, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {

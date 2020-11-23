@@ -25,19 +25,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a id="nav-mov" href="" class="nav-link" style="color: white;">영화</a>
+          <a id="nav-mov" href="{% url 'movies:movie_list' %}" class="nav-link" style="color: white;">영화</a>
         </li>
         <li class="nav-item">
-          <a id="nav-com" href="#" class="nav-link" style="color: white;">커뮤니티</a>
+          <a id="nav-com" href="{% url 'community:index' %}" class="nav-link" style="color: white;">커뮤니티</a>
         </li>
         <li class="nav-item">
           <a id="nav-map" href="https://map.naver.com/v5/search/%EC%98%81%ED%99%94%EA%B4%80?c=14141555.5891601,4508068.8894076,13,0,0,0,dh" class="nav-link" style="color: white;">영화관 찾기</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0" action="" method="get">
+      {% comment %} <form class="form-inline my-2 my-lg-0" action="" method="get">
         <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search" id="q" name="q"
           value="{{ q }}">
-      </form>
+      </form> {% endcomment %}
       <div>
         {% if request.user.is_authenticated %}
         <div class="btn-group float-right">
@@ -47,13 +47,13 @@
             <div class="d-inline-block text-truncate">님</div>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a href="" class="dropdown-item">마이페이지</a>
-            <a href="" class="dropdown-item">로그아웃</a>
+            {% comment %} <a href="" class="dropdown-item">마이페이지</a> {% endcomment %}
+            <a href="{% url 'accounts:logout' %}" class="dropdown-item">로그아웃</a>
           </div>
         </div>
         {% else %}
-          <a href="" class="btn btn-info">로그인</a>
-          <a href="" class="btn btn-info">회원가입</a>
+          <a href="{% url 'accounts:login' %}" class="btn btn-info">로그인</a>
+          <a href="{% url 'accounts:signup' %}" class="btn btn-info">회원가입</a>
         {% endif %}
       </div>
     </div>
