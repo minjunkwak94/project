@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_extensions',
     'bootstrap4',
     'bootstrap_pagination',
 ]
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'final_pjt_back.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'final_pjt_back' / 'templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
