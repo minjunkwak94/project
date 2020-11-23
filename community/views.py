@@ -15,7 +15,7 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'posts': posts,
+        # 'posts': posts,
         'page_obj':page_obj,
     }
     return render(request, 'community/index.html', context)
@@ -41,10 +41,12 @@ def create(request):
 
 def detail(request, post_pk):    
     post = get_object_or_404(Post, pk=post_pk)
+    form = PostForm(instance=post)
     comment_form = CommentForm()
     comments = post.comment_set.all()
     context = {
         'post': post,
+        'form' : form,
         'comment_form': comment_form,
         'comments': comments,
     }
@@ -113,3 +115,18 @@ def comments_delete(request, post_pk, comment_pk):
         if request.user == comment.user:
             comment.delete()
     return redirect('community:detail', post_pk)
+
+def pur_posts(request, category_pk):
+    if int(category_pk) > 3:
+        return redirect('community:posts')
+    posts = Post.objects.filter(category=category_pk).order_by('-id')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'posts': posts,
+        'page_obj': page_obj,
+        'category_pk': category_pk,
+    }
+    return render(request, 'community/index.html', context)
+

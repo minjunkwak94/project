@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
-
+{% load bootstrap4 %}
 {% block content %}
   <h2 class="text-center">DETAIL</h2>
+  {% comment %} {% bootstrap_form form %} {% endcomment %}
+
   <h3>{{ post.pk }} 번째 글</h3>
   <hr>
   <p>제목: {{ post.title }}</p>
