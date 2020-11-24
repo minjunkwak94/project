@@ -13,7 +13,7 @@ from .forms import RankForm
 
 @require_GET
 def movie_list(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.order_by('pk')
     paginator = Paginator(movies, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -28,7 +28,7 @@ def movie_list(request):
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     rank_form = RankForm()
-    ranks = movie.rank_set.all()
+    ranks = movie.movie_rank.all()
     # ranks = Rank.objects.filter(movie=movie)
     total = 0
     num = len(ranks)
@@ -71,6 +71,47 @@ def rank_delete(request, movie_pk, rank_pk):
     rank = get_object_or_404(Rank, movie=movie, pk=rank_pk)
     rank.delete()
     return redirect("movies:movie_list")
+
+@require_GET
+def movies_recommended(request):    
+    ranks = request.user.user_rank.all()
+    selected_ranks = []        
+
+    #일정 평점 이상만 골라낸다
+    for rank in ranks:
+        if rank.star >= 4:
+            selected_ranks.append(rank)
+    
+    target_genres = []        
+    # 일정 평점 이상의 장르들 골라낸다
+    for rank in selected_ranks:
+        genres = rank.movie.genres.all()
+        for genre in genres:
+            target_genres.append(genre)
+    target_genres = list(set(target_genres))
+    # print(target_genres)
+    movies = Movie.objects.all()
+    target_movies = []
+    for target_genre in target_genres:
+        for movie in movies:        
+            if target_genre in movie.genres.all():
+                target_movies.append(movie)
+                continue
+    # print(target_movies)
+    paginator = Paginator(target_movies, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'movies': movies,
+        'page_obj' : page_obj,
+    }
+    return render(request, 'movies/movies_recommended.html', context)
+
+
+
+    # print(request.user.rank_set)
+    return redirect("movies:movie_list")
+        
 
 # @api_view(['GET'])
 # def movie_list(request):

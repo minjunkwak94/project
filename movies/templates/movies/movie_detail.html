@@ -4,7 +4,7 @@
 
 {% block content %}
 
-  <a href="{% url 'movies:movie_list' %}">뒤로가기</a>
+  <a class="btn btn-primary" href="{% url 'movies:movie_list' %}">뒤로가기</a>
   <div class="backdrop row m-0 my-5">
     <div class="col-12 col-md-3 align-self-center" style="height: 100%;">
       <img src="{{ movie.poster_path }}" id="poster-img"  style="width: 100%;" alt="...">
@@ -20,40 +20,17 @@
         </p>
       </div>
       <hr>
-      <pre class="custom-break-word">{{ movie.overview }}</pre>
+      <p class="custom-break-word">{{ movie.overview }}</p>
       <hr>
       <div>{{ movie.release_date }} 개봉</div>
       <div>평점: {{ movie.vote_average }}</div>
       <div class="custom-break-word">원제목: {{ movie.original_title }}</div>
       <div>언어: {{ movie.original_language }}</div>
       <hr>
-      {% comment %} <span class="cnt-{{movie.pk}}">{{ movie.like_users.all|length }}</span> 명이 이 영화를 좋아합니다. {% endcomment %}
+      
       <hr>
     </div>
   </div>
-
-
-  {% comment %} <h4>Rank List</h4>
-    {% if ranks|length %}
-      <p><b>{{ ranks|length }} Ranks!</b></p>
-    {% endif %}
-    {% for rank in ranks %}
-      <div>
-        {{ rank.user }} - {{ rank.star }}
-      </div>
-    {% empty %}
-      <p><b>No Rank!</b></p>
-    {% endfor %}
-    <hr>
-    <form action="{% url 'movies:rank_create' movie.pk %}" method="POST">
-      {% csrf_token %}
-      {{ rank_form }}
-      <input type="submit">
-    </form> {% endcomment %}
-    {% comment %} {% else %}
-      <a href="{% url 'accounts:login' %}">Login First</a>
-    {% endif %}
-    <a href="{% url 'movies:movie_list' %}">[BACK]</a> {% endcomment %}
 
 
 
@@ -62,7 +39,7 @@
       <p><b>{{ ranks|length }}개의 평점이 있어! </b></p>
       <p><b>평균 평점은 {{ avg }} 야!</b></p>
     {% else %}
-      <div class="h5">첫번째로 평점을 남겨줘!</div>
+      <div class="h5"> 니가 1빠다 </div>
     {% endif %}
     <hr>
     {% for rank in ranks %}
@@ -84,6 +61,7 @@
         <div class="d-inline-block custom-break-word">{{ rank.user }}</div>
       </div>
       <hr>
+        <p class="custom-break-word">{{ rank.content }}</p>
       <div class="text-right">
         <div><small>작성:{{ rank.created_at }}</small></div>
         <div><small>수정:{{ rank.updated_at }}</small></div>
@@ -104,8 +82,8 @@
   <div id="bookmark"></div>
   <form class="mb-5" action="{% url 'movies:rank_create' movie.pk %}" method="POST">
     {% csrf_token %}
-    {{ rank_form }}
-    <button type="submit" class="mt-2 btn btn-info">평점주기</button>
+    {% bootstrap_form rank_form %}
+    <button type="submit" class="mt-2 btn btn-primary">평점주기</button>
   </form>
 
   <style>
@@ -130,58 +108,7 @@
 
   </style>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script>
-    var img = document.getElementById('poster-img')
-    if (img.src.slice(31,img.src.length).indexOf('/') !== 0 ) {
-      img.src = img.src.slice(31,img.src.length)
-    }
-
-    const likeBtns = document.querySelectorAll('.like-btn')
-    likeBtns.forEach(function(btn) {
-      btn.addEventListener('mouseover', function(event) {
-        btn.getElementsByTagName('i')[0].classList.add('animate__animated', 'animate__rubberBand')
-
-      })
-      btn.addEventListener('mouseout', function(event) {
-        btn.getElementsByTagName('i')[0].classList.remove('animate__animated', 'animate__rubberBand')
-
-      })
-      btn.addEventListener('click', function(event) {
-        axios.get(`/movies/${btn.dataset.pk}/like`)
-          .then(function(res) {
-            if (res.data.liked) {
-              btn.getElementsByTagName('i')[0].style.color = 'crimson'
-            } else {
-              btn.getElementsByTagName('i')[0].style.color = 'white'
-            }
-            const cntSpan = document.querySelector(`.cnt-${btn.dataset.pk}`)
-            if (res.data.count) {
-              cntSpan.innerText = res.data.count
-            } else {
-
-              cntSpan.innerText = 0
-            }
-
-          })
-          .catch(function(err) {
-            console.log(err)
-          })
-      })
-    })
-
-    function getOffsetTop(el) {
-      var top = 0;
-      if (el.offsetParent) {
-        do {
-          top += el.offsetTop;
-        } while (el = el.offsetParent);
-        return [top];
-      }
-    }
-    window.scroll(0, getOffsetTop(document.getElementById("bookmark")));
-
-  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>  
 
 {% endblock %}
 

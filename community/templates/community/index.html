@@ -3,22 +3,22 @@
 {% load bootstrap_pagination %}
 
 {% block content %}
-<h1 class="text-center">posts</h1>
+<h1 class="text-center text-white"> 영화 게시판 </h1>
 
 <div class="w-100 my-5">
-    <div class="w-100 btn-group btn-group-sm overflow-auto text-white" role="group">
+    <div class="w-100 btn-primary btn-group btn-group-sm overflow-auto text-white" role="group">
     {% if request.user.is_authenticated %}
-    <a class="" onclick="location.href='{% url 'community:create' %}'">새 글 작성</a>
+    <a class="btn" onclick="location.href='{% url 'community:create' %}'">새 글 </a>
   {% else %}
     <a href="{% url 'accounts:login' %}">[새 글을 작성하려면 로그인 하세요]</a>
   {% endif %}
-      <button id="btn-0" class="btn my-2 my-sm-0 text-white"
-        onclick="location.href='{% url 'community:index' %}'">전체게시판</button>
-      <button id="btn-1" class="btn my-2 my-sm-0 text-white"
+  {% comment %} display-4 my-2 my-sm-0 {% endcomment %}
+      <button type="button" id="btn-0" class="btn btn-primary  text-white" onclick="location.href='{% url 'community:index' %}'">전체게시판</button>
+      <button type="button" id="btn-1" class="btn btn-primary my-2 my-sm-0 text-white"
         onclick="location.href='{% url 'community:pur_posts' 1 %}'">자유게시판</button>
-      <button id="btn-2" class="btn my-2 my-sm-0 text-white"
+      <button type="button" id="btn-2" class="btn btn-primary my-2 my-sm-0 text-white"
         onclick="location.href='{% url 'community:pur_posts' 2 %}'">건의게시판</button>
-      <button id="btn-3" class="btn my-2 my-sm-0 text-white"
+      <button type="button" id="btn-3" class="btn btn-primary my-2 my-sm-0 text-white"
         onclick="location.href='{% url 'community:pur_posts' 3 %}'">추천게시판</button>
     </div>
 </div>
