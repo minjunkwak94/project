@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
-
+from django.contrib.auth.decorators import login_required
 # from rest_framework.response import Response
 # from rest_framework.decorators import api_view
 # from rest_framework import status
@@ -45,9 +45,46 @@ def movie_detail(request, movie_pk):
         'avg' : avg,
     }
     return render(request, 'movies/movie_detail.html', context)
+
+@login_required
+def rank_update(request, movie_pk, rank_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    rank = get_object_or_404(Rank, pk=rank_pk)
+    rank_form = RankForm()
+    ranks = movie.movie_rank.all()      
+    total = 0
+    num = len(ranks)
+    for r in ranks:
+        total += r.star
+    if total != 0:
+        avg = round(total / num, 1)
+    else:
+        avg = 0
+    if request.user == rank.user:
+        if request.method == 'POST':
+            form = RankForm(request.POST, instance=rank)
+            if form.is_valid():
+                rank = form.save(commit=False)
+                rank.user = request.user
+                rank.movie = movie
+                rank.save()
+                return redirect('movies:detail', movie.pk)
+        else:
+            form = RankForm(instance=rank)        
+        context = {
+            'movie': movie,
+            'rank_form': form,
+            'ranks': ranks,
+            'avg' : avg,
+        }
+        return render(request, 'movies/movie_detail.html', context)    
+    else:
+        return redirect('movies:detail', movie.pk)
  
+
  
 @require_POST
+@login_required
 def rank_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     rank_form = RankForm(request.POST)
@@ -66,12 +103,14 @@ def rank_create(request, movie_pk):
   
 
 @require_POST
+@login_required
 def rank_delete(request, movie_pk, rank_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     rank = get_object_or_404(Rank, movie=movie, pk=rank_pk)
     rank.delete()
     return redirect("movies:movie_list")
 
+@login_required
 @require_GET
 def movies_recommended(request):    
     ranks = request.user.user_rank.all()

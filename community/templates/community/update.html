@@ -7,8 +7,9 @@
     {% csrf_token %}
     <p> 1 : 자유, 2 : 건의, 3: 추천 </p>
    {% bootstrap_form form %}
-    <input type="submit">
+    <input class="btn btn-success" type="submit">
   </form>
   <hr>
-  <a href="{% url 'community:detail' post.pk %}">[back]</a>
+
+  <a class="btn btn-primary" href="{% url 'community:detail' post.pk %}">뒤로가기</a>
 {% endblock %}

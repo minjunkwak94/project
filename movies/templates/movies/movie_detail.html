@@ -4,7 +4,7 @@
 
 {% block content %}
 
-  <a class="btn btn-primary" href="{% url 'movies:movie_list' %}">뒤로가기</a>
+  
   <div class="backdrop row m-0 my-5">
     <div class="col-12 col-md-3 align-self-center" style="height: 100%;">
       <img src="{{ movie.poster_path }}" id="poster-img"  style="width: 100%;" alt="...">
@@ -26,9 +26,9 @@
       <div>평점: {{ movie.vote_average }}</div>
       <div class="custom-break-word">원제목: {{ movie.original_title }}</div>
       <div>언어: {{ movie.original_language }}</div>
+      <hr>      
       <hr>
-      
-      <hr>
+      <a class="btn btn-primary" href="{% url 'movies:movie_list' %}">뒤로가기</a>
     </div>
   </div>
 
@@ -68,9 +68,10 @@
       </div> 
       {% if user == rank.user %}
       <div class="text-right">
+        <a class="btn" href="{% url 'movies:rank_update' movie.pk rank.pk %}" class="square_btn">수정</a>
         <form action="{% url 'movies:rank_delete' movie.pk rank.pk %}" method="POST">
           {% csrf_token %}
-          <input type="submit" class="square_btn" value="삭제">
+          <input type="submit" class="btn square_btn" value="삭제">
         </form>
       </div>
       </div>

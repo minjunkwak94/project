@@ -53,25 +53,25 @@ def detail(request, post_pk):
     return render(request, 'community/detail.html', context)
 
 
-@login_required
+
 @require_http_methods(['GET', 'POST'])
 def update(request, post_pk):
     # Post = Post.objects.get(pk=pk)
-    Post = get_object_or_404(Post, pk=post_pk)
+    post = get_object_or_404(Post, pk=post_pk)
     # 수정하는 유저와, 게시글 작성 유저가 같은지 ?
-    if request.user == Post.user:
+    if request.user == post.user:
         if request.method == 'POST':
-            form = PostForm(request.POST, instance=Post)
+            form = PostForm(request.POST, instance=post)
             if form.is_valid():
                 form.save()
-                return redirect('community:detail', Post.pk)
+                return redirect('community:detail', post.pk)
         else:
-            form = PostForm(instance=Post)
+            form = PostForm(instance=post)
     else:
         return redirect('community:index')
     context = {
         'form': form,
-        'Post': Post,
+        'post': post,
     }
     return render(request, 'community/update.html', context)
 

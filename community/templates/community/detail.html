@@ -4,48 +4,123 @@
   <h2 class="text-center">DETAIL</h2>
   {% comment %} {% bootstrap_form form %} {% endcomment %}
 
-  <h3>{{ post.pk }} 번째 글</h3>
   <hr>
-  <p>제목: {{ post.title }}</p>
-  <p>내용: {{ post.content }}</p>
-  <p>작성 시각: {{ post.created_at }}</p>
-  <p>수정 시각: {{ post.updated_at }}</p>
+  
+    <h2>{{ post.title }}</h2>          
+    <p>내용: {{ post.content }}</p>
+    <p>작성 시각: {{ post.created_at }}</p>
+    <p>수정 시각: {{ post.updated_at }}</p>    
+  
+  <br>    
+  
+  
+  
+  
+  
   <hr>
   {% if request.user == post.user %}
-    <a href="{% url 'community:update' post.pk %}">UPDATE</a><br>
+    <a class="btn btn-success"href="{% url 'community:update' post.pk %}">수정하기</a><br>
     <form action="{% url 'community:delete' post.pk %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="DELETE">
+      <button class="btn btn-danger"> 삭제 </button>      
     </form>
   {% endif %}
-  <a href="{% url 'community:index' %}">[back]</a>
+  <a class="btn btn-primary" href="{% url 'community:index' %}">뒤로가기</a>  
   <hr>
   <h4>댓글 목록</h4>
   {% if comments|length %}
     <p>{{ comments|length }} 개의 댓글이 있습니다.</p>
   {% endif %}
   {% for comment in comments %}
-    <li>
-      {{ comment.user }} - {{ comment.content }}
-      {% if request.user == comment.user %}
-        <form action="{% url 'community:comments_delete' post.pk comment.pk %}" method="POST" class="d-inline">
+  	<table border=0 width=970 cellspacing=0 cellpadding=0  style=table-layout:fixed id="re5" name="re5">		
+		<tr>
+		 <td style="padding:0">
+						<table border=0 width=100% cellspacing=0 cellpadding=0 class=info_bg style="table-layout:fixed;">
+			<tr valign="top" >			
+				<td width=86 align=center style=padding-top:4px;><a href="javascript:onclick=AddChar('\n5/ ');">
+				<img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F262CE43A552F75B809" style='border-radius:4px;border:0;'  width=64></a></td>
+				<td width=5></td>			
+				<td style="padding:1px 0 4px 0px;word-break:break-all" align="left">
+				  <span id=cTitle37658651 style="line-height:200%">				
+<span class="reply2btn" style="background:#6A84B7;color:#fafafa;border-radius:4px;">댓글 <b><span class=num>5</b></span> 
+<span style="color:#333;font-weight:bold;font-size:12px;"> {{ comment.user }} 	 <i class="material-icons" style=color:#bbbbbb;font-size:16px;padding-top:0px;>&#xE324;</i></span>  	
+	<span class="sm logout"><span style=color:#6A84B7;> {{ comment.created_at }}</span>				  
+</span>				 
+<table width=700 cellpadding=0 cellspacing=0  id=cid5>
+<tr><td  align="left" class="hansb " style='word-break:break-word;padding-top:4px;font-size:15px;'>
+ {{ comment.content }}</span>
+ {% if request.user == comment.user %}
+        <!-- <form class="d-inline delete-form" data-post-id="{{ post.pk }}", data-comment-id="{{ comment.pk }}" >
           {% csrf_token %}
-          <input type="submit" value="DELETE">
-        </form>
+          <button class="btn btn-link">
+            <i id="delete-{{comment.pk}}"class="material-icons md-12 text-danger" type="submit"> &#xE14C; </i>
+          </button>          
+        </form> -->
+        <span>
+          <form action="{% url 'community:comments_delete' post.pk comment.pk %}" method="POST" >
+            {% csrf_token %}          
+            <button class="btn" type="submit"> <i class="fas fa-eraser"> </i> </button>          
+          </form>
+        </span>
+        
       {% endif %}
-    </li>
+ <br><p> 
+</td></tr></table> 
+				</td>
+
+
+			</tr>
+			</table>
+      
+
+		 </td>
+		</tr>
+				<tr><td colspan=2 align=right>		
+		</td></tr>		</table>
+					<hr align=center style="margin-top:12px;margin-bottom:12px;width:970px;border:0;height:1px;background-image:linear-gradient(to right, #eee, #edecec, #eee);visibility:hidden;"></hr>  
+    
   {% empty %}
     <p>댓글이 아직 없어요..</p>
   {% endfor %}
   <hr>
   <h4>댓글 작성</h4>
+
   {% if request.user.is_authenticated %}
     <form action="{% url 'community:comments_create' post.pk %}" method="POST">
       {% csrf_token %}
       {% bootstrap_form comment_form %}
-      <input type="submit">
+      <button class="btn btn-primary"> 작성완료 </button>
     </form>
   {% else %}
     <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인 하세요.]</a>
   {% endif %}
 {% endblock  %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const forms = document.querySelectorAll('.delete-form')
+  forms.forEach(function (form) {  
+    console.log('asd')  
+    form.addEventListener('submit', function (event) {
+      event.preventDefault()
+      const postId = event.target.dataset.postId
+      const commentId = event.target.dataset.commentId
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+      axios.post(`http://127.0.0.1:8000/community/${postId}/comments/${commentId}/delete`, {}, {        
+          headers: {
+            'X-CSRFToken': csrftoken
+          }}
+        )
+
+        
+
+
+
+
+    })
+  }) 
+  
+
+
+</script>
+
